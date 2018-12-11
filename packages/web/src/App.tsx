@@ -1,22 +1,15 @@
-import * as React from 'react';
-import './App.css';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import { ApolloProvider } from "react-apollo";
 
-import logo from './logo.svg';
+import registerServiceWorker from "./registerServiceWorker";
+import { client } from "./apollo";
+import { Routes } from "./routes";
 
-class App extends React.Component {
-  public render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
-}
-
-export default App;
+ReactDOM.render(
+  <ApolloProvider client={client}>
+    <Routes />
+  </ApolloProvider>,
+  document.getElementById("root") as HTMLElement
+);
+registerServiceWorker();

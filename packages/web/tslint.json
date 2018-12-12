@@ -1,6 +1,16 @@
 {
-  "extends": ["../../tslint.json", "tslint-react"],
-  "linterOptions": {
-    "exclude": ["config/**/*.js", "node_modules/**/*.ts"]
-  }
+  "defaultSeverity": "error",
+  "extends": ["tslint:latest", "tslint-config-prettier"],
+  "jsRules": {
+    "jsx-wrap-multiline": false
+  },
+  "rules": {
+    "no-console": false,
+    "member-access": false,
+    "object-literal-sort-keys": false,
+    "ordered-imports": false,
+    "interface-name": false,
+    "no-submodule-imports": false
+  },
+  "rulesDirectory": []
 }

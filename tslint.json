@@ -1,7 +1,9 @@
 {
     "defaultSeverity": "error",
     "extends": ["tslint:latest", "tslint-config-prettier"],
-    "jsRules": {},
+    "jsRules": {
+      "jsx-wrap-multiline": false
+    },
     "rules": {
       "no-console": false,
       "member-access": false,

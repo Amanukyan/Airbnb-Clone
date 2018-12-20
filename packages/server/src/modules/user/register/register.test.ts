@@ -1,16 +1,15 @@
-import { User } from "../../../entity/User";
+import { Connection } from "typeorm";
 import * as faker from "faker";
-
 import {
-  duplicateEmail,
   emailNotLongEnough,
   invalidEmail,
   passwordNotLongEnough
-} from "./errorMessages";
-import { Connection } from "typeorm";
+} from "@airbnb-clone/common";
+
+import { User } from "../../../entity/User";
+import { duplicateEmail } from "./errorMessages";
 import { TestClient } from "../../../utils/TestClient";
 import { createTestConn } from "../../../testUtils/createTestConn";
-
 const email = faker.internet.email();
 const password = faker.internet.password();
 

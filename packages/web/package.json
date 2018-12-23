@@ -16,7 +16,8 @@
     "react-router-dom": "^4.3.1",
     "react-scripts-ts": "3.1.0",
     "yup": "^0.26.6",
-    "@airbnb-clone/common": "1.0.0"
+    "@airbnb-clone/common": "1.0.0",
+    "@airbnb-clone/controller": "1.0.0"
   },
   "scripts": {
     "start": "react-scripts-ts start",

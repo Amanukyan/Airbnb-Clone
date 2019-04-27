@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { passwordNotLongEnough } from "./modules/user/register/errorMessages";
+import { passwordNotLongEnough } from "@airbnb-clone/common";
 
 export const registerPasswordValidation = yup
   .string()

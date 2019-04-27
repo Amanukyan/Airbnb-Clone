@@ -1,3 +1,6 @@
-var Redis = require("ioredis")
+var Redis = require("ioredis");
 
-export const redis = new Redis();
+export const redis =
+  process.env.NODE_ENV === "production"
+    ? new Redis(process.env.REDIS_URL)
+    : new Redis();

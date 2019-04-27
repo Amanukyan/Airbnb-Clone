@@ -5,7 +5,10 @@
   "typings": "dist/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "rm -rf ./dist && tsc"
+    "build": "rm -rf ./dist && tsc",
+    "introspect": "yarn run apollo schema:download --endpoint=http://localhost:4000 schema.json",
+    "generate": "yarn run apollo codegen:generate --localSchemaFile=schema.json --target=typescript --globalTypesFile=src/types/globalTypes.ts",
+    "gen-types": "yarn introspect && yarn generate"
   },
   "dependencies": {
     "graphql": "^14.2.1",
@@ -18,6 +21,7 @@
     "@types/node": "^10.12.18",
     "@types/react": "^16.7.18",
     "@types/react-dom": "^16.0.11",
+    "apollo": "^2.9.0",
     "tslint": "^5.12.0",
     "tslint-config-prettier": "^1.17.0",
     "typescript": "^3.2.2"

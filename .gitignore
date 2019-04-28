@@ -10,3 +10,4 @@ dump.rdb
 .env.prod
 dist/
 .netlify
+.DS_Store

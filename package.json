@@ -4,9 +4,21 @@
     "build:server": "lerna run build --scope={@airbnb-clone/common,@airbnb-clone/server}",
     "build:web": "lerna run build --scope={@airbnb-clone/common,@airbnb-clone/controller,@airbnb-clone/web}"
   },
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/react-native",
+      "**/react-native/**",
+      "**/expo",
+      "**/expo/**",
+      "**/react-native-typescript-transformer",
+      "**/react-native-typescript-transformer/**",
+      "**/metro-bundler-config-yarn-workspaces",
+      "**/metro-bundler-config-yarn-workspaces/**"
+    ]
+  },
   "devDependencies": {
     "lerna": "^3.13.4"
   }

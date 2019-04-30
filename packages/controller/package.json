@@ -6,9 +6,10 @@
   "license": "MIT",
   "scripts": {
     "build": "rm -rf ./dist && tsc",
-    "introspect": "yarn run apollo schema:download --endpoint=http://localhost:4000 schema.json",
-    "generate": "yarn run apollo codegen:generate --localSchemaFile=schema.json --target=typescript --globalTypesFile=src/types/globalTypes.ts",
-    "gen-types": "yarn introspect && yarn generate"
+    "schema:download": "yarn run apollo schema:download --endpoint=http://localhost:4000 schema.json",
+    "codegen:generate": "yarn run apollo codegen:generate --localSchemaFile=schema.json --target=typescript --globalTypesFile=src/types/globalTypes.ts",
+    "gen:types": "yarn schema:download && yarn codegen:generate",
+    "refresh:types": "yarn run gen:types && yarn run build"
   },
   "dependencies": {
     "graphql": "^14.2.1",

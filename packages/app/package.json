@@ -9,11 +9,23 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "apollo-cache-inmemory": "^1.5.1",
+    "apollo-client": "^2.5.1",
+    "apollo-link-http": "^1.5.14",
     "expo": "32.0.0",
+    "graphql": "^14.2.1",
+    "graphql-tag": "^2.10.1",
     "react": "16.5.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz"
+    "react-apollo": "^2.5.5",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+    "react-native-element": "^1.2.1",
+    "react-router-native": "^5.0.0"
   },
   "devDependencies": {
+    "@types/react": "^16.8.15",
+    "@types/react-native": "^0.57.51",
+    "@types/react-native-elements": "^0.18.0",
+    "@types/react-router-native": "^4.2.4",
     "metro-bundler-config-yarn-workspaces": "^1.0.3",
     "typescript": "^3.4.5"
   },

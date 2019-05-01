@@ -18,4 +18,18 @@ exports.validUserSchema = yup.object().shape({
         .required(),
     password: exports.registerPasswordValidation
 });
+const invalidLogin = "invalid login";
+exports.loginSchema = yup.object().shape({
+    email: yup
+        .string()
+        .min(3, invalidLogin)
+        .max(255, exports.invalidEmail)
+        .email(invalidLogin)
+        .required(),
+    password: yup
+        .string()
+        .min(3, invalidLogin)
+        .max(255, invalidLogin)
+        .required()
+});
 //# sourceMappingURL=user.js.map

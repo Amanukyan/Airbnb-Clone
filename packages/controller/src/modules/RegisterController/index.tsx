@@ -5,10 +5,14 @@ import {
   RegisterMutation,
   RegisterMutationVariables
 } from "./__generated__/RegisterMutation";
+import { normalizeErrors } from "../../utils/normalizeErrors";
+import { NormalizedErrorMap } from "../../types/NormalizedErrorMap";
 
 interface Props {
   children: (data: {
-    submit: (values: RegisterMutationVariables) => Promise<null>;
+    submit: (
+      values: RegisterMutationVariables
+    ) => Promise<NormalizedErrorMap | null>;
   }) => JSX.Element | null;
 }
 
@@ -17,10 +21,19 @@ class C extends React.PureComponent<
 > {
   submit = async (values: RegisterMutationVariables) => {
     console.log(values);
-    const response = await this.props.mutate({
+    const res = await this.props.mutate({
       variables: values
     });
-    console.log("response: ", response);
+
+    if (res && res.data) {
+      const { register } = res.data;
+
+      console.log("response: ", register);
+
+      if (register) {
+        return normalizeErrors(register);
+      }
+    }
     return null;
   };
 

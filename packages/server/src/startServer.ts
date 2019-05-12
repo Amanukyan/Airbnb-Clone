@@ -1,8 +1,9 @@
 import "reflect-metadata";
 import "dotenv/config";
-import { GraphQLServer, PubSub } from "graphql-yoga";
+import { GraphQLServer } from "graphql-yoga";
 import { applyMiddleware } from "graphql-middleware";
 import * as express from "express";
+import { RedisPubSub } from "graphql-redis-subscriptions";
 var session = require("express-session");
 var RateLimit = require("express-rate-limit");
 var RateLimitRedisStore = require("rate-limit-redis");
@@ -27,7 +28,7 @@ export const startServer = async () => {
   const schema = genSchema() as any;
   applyMiddleware(schema, middleware);
 
-  const pubsub = new PubSub();
+  const pubsub = new RedisPubSub();
 
   const server = new GraphQLServer({
     schema,

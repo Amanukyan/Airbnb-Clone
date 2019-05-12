@@ -3409,7 +3409,7 @@ apollo-link-http@^1.5.14, apollo-link-http@^1.5.5, apollo-link-http@^1.5.7:
     apollo-link-http-common "^0.2.13"
     tslib "^1.9.3"
 
-apollo-link-ws@^1.0.9:
+apollo-link-ws@^1.0.17, apollo-link-ws@^1.0.9:
   version "1.0.17"
   resolved "https://registry.yarnpkg.com/apollo-link-ws/-/apollo-link-ws-1.0.17.tgz#a7ec3f90d2651b77d6be9bb6e63deff2efac56d4"
   integrity sha512-0PKgahM2BOcUiI3QSJMYXOoUylWKzar5NTZLgMLEW4K/CczOTzC4CTXvKMjh/cx57Jto/U2xzKRy9BEoNfnK5Q==
@@ -8713,6 +8713,15 @@ graphql-playground-middleware-lambda@1.7.12:
   dependencies:
     graphql-playground-html "1.6.12"
 
+graphql-redis-subscriptions@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/graphql-redis-subscriptions/-/graphql-redis-subscriptions-2.1.0.tgz#cd7804d9524c84800deaf81632539f3f2693ebf5"
+  integrity sha512-edur8YlwIsjk9K1Ao8vgEQkNKvt11FCTlOIFfxMKYIHOVv4zMvDsv7fs282LxMJBJGDCDDcdc1c5iKj0BjXO+Q==
+  dependencies:
+    iterall "^1.2.2"
+  optionalDependencies:
+    ioredis "^4.6.3"
+
 graphql-request@^1.8.2:
   version "1.8.2"
   resolved "https://registry.yarnpkg.com/graphql-request/-/graphql-request-1.8.2.tgz#398d10ae15c585676741bde3fc01d5ca948f8fbe"
@@ -9569,6 +9578,21 @@ ioredis@^4.2.0:
     debug "^3.1.0"
     denque "^1.1.0"
     flexbuffer "0.0.6"
+    lodash.defaults "^4.2.0"
+    lodash.flatten "^4.4.0"
+    redis-commands "1.4.0"
+    redis-errors "^1.2.0"
+    redis-parser "^3.0.0"
+    standard-as-callback "^2.0.1"
+
+ioredis@^4.6.3:
+  version "4.9.3"
+  resolved "https://registry.yarnpkg.com/ioredis/-/ioredis-4.9.3.tgz#5e200563390d152a788d757e303c6b0cd33c6ae5"
+  integrity sha512-17BjBQ4cdUY8hxIvcpvxohH8uZ93/I2pi2CsdgbgXV1oYFiLOLpQASNmtZUsysxTwiF2Dcld7YgqJymNQsAdwA==
+  dependencies:
+    cluster-key-slot "^1.0.6"
+    debug "^3.1.0"
+    denque "^1.1.0"
     lodash.defaults "^4.2.0"
     lodash.flatten "^4.4.0"
     redis-commands "1.4.0"

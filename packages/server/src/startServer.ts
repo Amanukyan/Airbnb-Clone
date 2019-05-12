@@ -14,6 +14,7 @@ import { genSchema } from "./utils/genSchema";
 import { redisSessionPrefix } from "./constants";
 import { createTestConn } from "./testUtils/createTestConn";
 import { middleware } from "./middleware";
+import { userLoader } from "./loaders/UserLoader";
 
 const SESSION_SECRET = "qfzf32ff2Ò";
 var RedisStore = require("connect-redis")(session);
@@ -32,7 +33,8 @@ export const startServer = async () => {
       redis,
       url: request.protocol + "://" + request.get("host"),
       session: request.session,
-      req: request
+      req: request,
+      userLoader: userLoader()
     })
   });
 

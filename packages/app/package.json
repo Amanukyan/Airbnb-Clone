@@ -9,11 +9,12 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@airbnb-clone/controller": "1.0.0",
     "@airbnb-clone/common": "1.0.0",
+    "@airbnb-clone/controller": "1.0.0",
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-client": "^2.5.1",
     "apollo-link-http": "^1.5.14",
+    "apollo-upload-client": "^10.0.1",
     "expo": "32.0.0",
     "graphql": "^14.2.1",
     "graphql-tag": "^2.10.1",
@@ -24,6 +25,7 @@
     "react-router-native": "^5.0.0"
   },
   "devDependencies": {
+    "@types/apollo-upload-client": "^8.1.1",
     "@types/react": "^16.8.15",
     "@types/react-native": "^0.57.51",
     "@types/react-native-elements": "^0.18.0",

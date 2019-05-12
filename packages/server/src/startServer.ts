@@ -2,6 +2,7 @@ import "reflect-metadata";
 import "dotenv/config";
 import { GraphQLServer } from "graphql-yoga";
 import { applyMiddleware } from "graphql-middleware";
+import * as express from "express";
 var session = require("express-session");
 var RateLimit = require("express-rate-limit");
 var RateLimitRedisStore = require("rate-limit-redis");
@@ -63,6 +64,8 @@ export const startServer = async () => {
       }
     })
   );
+
+  server.express.use("/images", express.static("images"));
 
   const cors = {
     credentials: true,

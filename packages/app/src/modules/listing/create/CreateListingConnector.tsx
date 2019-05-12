@@ -5,6 +5,7 @@ import { RouteComponentProps } from "react-router-native";
 import { Text, View, ScrollView } from "react-native";
 import { Button } from "react-native-elements";
 import { InputField } from "../../shared/InputField";
+// import { CheckboxGroupField } from "../../shared/CheckboxGroupField";
 
 interface FormValues {
   picture: null;
@@ -33,7 +34,7 @@ class C extends React.PureComponent<
 
   render() {
     return (
-      <Formik<{}, FormValues>
+      <Formik<FormValues>
         initialValues={{
           picture: null,
           name: "",
@@ -48,7 +49,7 @@ class C extends React.PureComponent<
         }}
         onSubmit={this.submit}
       >
-        {({ handleSubmit }) => (
+        {({ handleSubmit, values }) => (
           <View
             style={{
               flex: 1,
@@ -76,36 +77,41 @@ class C extends React.PureComponent<
                 name="price"
                 placeholder="Price"
                 component={InputField}
-                useNumberComponent={true}
+                keyboardType="numeric"
               />
               <Field
                 label="Beds"
                 name="beds"
                 placeholder="Beds"
                 component={InputField}
-                useNumberComponent={true}
+                keyboardType="numeric"
               />
               <Field
                 label="Guests"
                 name="guests"
                 placeholder="Guests"
                 component={InputField}
-                useNumberComponent={true}
+                keyboardType="numeric"
               />
               <Field
                 label="Latitude"
                 name="latitude"
                 placeholder="Latitude"
                 component={InputField}
-                useNumberComponent={true}
+                keyboardType="numeric"
               />
               <Field
                 label="Longtitude"
                 name="longitude"
                 placeholder="Longitude"
                 component={InputField}
-                useNumberComponent={true}
+                keyboardType="numeric"
               />
+              {/* <Field
+                name="amenities"
+                options={["pool", "basketball court", "soccer field", "yard"]}
+                component={CheckboxGroupField as any}
+              /> */}
               <Button onPress={handleSubmit} title="save listing" />
             </ScrollView>
           </View>

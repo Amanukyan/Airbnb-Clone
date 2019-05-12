@@ -11,3 +11,4 @@ dump.rdb
 dist/
 .netlify
 .DS_Store
+images/ 

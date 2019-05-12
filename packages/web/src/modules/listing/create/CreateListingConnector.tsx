@@ -3,6 +3,7 @@ import { RouteComponentProps } from "react-router-dom";
 import { Form as AntForm, Button } from "antd";
 import { Form, Formik, FormikActions } from "formik";
 import { withCreateListing, WithCreateListing } from "@airbnb-clone/controller";
+// import { ImageFile } from "react-dropzone";
 
 import { Page1 } from "./ui/Page1";
 import { Page2 } from "./ui/Page2";
@@ -21,6 +22,7 @@ const FormItem = AntForm.Item;
 // amenities: [String!]!
 
 interface FormValues {
+  picture: File | null;
   name: string;
   category: string;
   description: string;
@@ -51,6 +53,7 @@ class C extends React.PureComponent<
     values: FormValues,
     { setSubmitting }: FormikActions<FormValues>
   ) => {
+    console.log("values=", values);
     await this.props.createListing(values);
     setSubmitting(false);
   };
@@ -61,6 +64,7 @@ class C extends React.PureComponent<
     return (
       <Formik<FormValues>
         initialValues={{
+          picture: null,
           name: "",
           category: "",
           description: "",
@@ -73,7 +77,7 @@ class C extends React.PureComponent<
         }}
         onSubmit={this.submit}
       >
-        {({ isSubmitting, isValid }) => (
+        {({ isSubmitting, values }) => (
           <Form style={{ display: "flex" }}>
             <div style={{ width: 400, margin: "auto" }}>
               {pages[this.state.page]}

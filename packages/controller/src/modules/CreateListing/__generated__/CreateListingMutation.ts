@@ -11,6 +11,7 @@ export interface CreateListingMutation {
 }
 
 export interface CreateListingMutationVariables {
+  picture?: any | null;
   name: string;
   category: string;
   description: string;

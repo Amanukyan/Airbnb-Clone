@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "postinstall": "./postinstall.sh",
     "build:server": "lerna run build --scope={@airbnb-clone/common,@airbnb-clone/server}",
     "build:web": "lerna run build --scope={@airbnb-clone/common,@airbnb-clone/controller,@airbnb-clone/web}"
   },

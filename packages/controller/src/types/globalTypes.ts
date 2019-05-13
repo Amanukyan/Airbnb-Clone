@@ -6,6 +6,11 @@
 // START Enums and Input Objects
 //==============================================================
 
+export interface MessageInput {
+  text: string;
+  listingId: string;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

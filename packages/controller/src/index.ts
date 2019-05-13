@@ -7,6 +7,7 @@ export * from "./modules/ChangePasswordController/__generated__/ForgotPasswordCh
 export * from "./modules/CreateListing";
 export * from "./modules/FindListings";
 export * from "./modules/ViewListing";
+export * from "./modules/ViewMessages";
 export * from "./modules/auth/AuthRoute";
 
 export * from "./types/NormalizedErrorMap";

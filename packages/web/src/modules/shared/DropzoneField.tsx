@@ -1,30 +1,53 @@
 import * as React from "react";
 import { FieldProps } from "formik";
 import Dropzone from "react-dropzone";
+import { Button } from "antd";
 
 export const DropzoneField: React.FunctionComponent<FieldProps<any>> = ({
-  field: { name },
-  form: { setFieldValue }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+  field: { name, value },
+  form: { setFieldValue, values, setValues }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
   ...props
 }) => {
+  const pUrl = (value ? value.preview : null) || values.pictureUrl;
   return (
-    <Dropzone
-      accept="image/jpeg, image/png"
-      multiple={false}
-      onDrop={([file]) => {
-        setFieldValue(name, file);
-      }}
-      {...props}
-    >
-      {({ getRootProps, getInputProps }) => (
-        <section>
-          <div {...getRootProps()}>
-            <input {...getInputProps()} />
-            <p>Drag 'n' drop some files here, or click to select files</p>
-          </div>
-        </section>
+    <div>
+      <Dropzone
+        accept="image/jpeg, image/png"
+        multiple={false}
+        onDrop={([file]) => {
+          setFieldValue(name, file);
+        }}
+        {...props}
+      >
+        {({ getRootProps, getInputProps }) => (
+          <section>
+            <div {...getRootProps()}>
+              <input {...getInputProps()} />
+              <p>Drag 'n' drop some files here, or click to select files</p>
+            </div>
+          </section>
+        )}
+      </Dropzone>
+      {pUrl && (
+        <img
+          src={pUrl}
+          style={{
+            maxHeight: 200
+          }}
+        />
       )}
-    </Dropzone>
+      <Button
+        onClick={() =>
+          setValues({
+            ...values,
+            pictureUrl: null,
+            picture: null
+          })
+        }
+      >
+        remove
+      </Button>
+    </div>
 
     // <Dropzone
     //   accept="image/jpeg, image/png"

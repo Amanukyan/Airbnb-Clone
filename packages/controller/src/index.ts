@@ -10,6 +10,7 @@ export * from "./modules/ViewListing";
 export * from "./modules/ViewMessages";
 export * from "./modules/CreateMessage";
 export * from "./modules/UpdateListing";
+export * from "./modules/SearchListings";
 export * from "./modules/auth/AuthRoute";
 
 export * from "./types/NormalizedErrorMap";

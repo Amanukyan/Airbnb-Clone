@@ -11,6 +11,12 @@ export interface MessageInput {
   listingId: string;
 }
 
+export interface SearchListingsInput {
+  guests?: number | null;
+  beds?: number | null;
+  name?: string | null;
+}
+
 export interface UpdateListingInput {
   name?: string | null;
   picture?: any | null;

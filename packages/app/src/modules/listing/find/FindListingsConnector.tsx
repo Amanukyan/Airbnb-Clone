@@ -1,6 +1,13 @@
 import * as React from "react";
 import { Card, Slider } from "react-native-elements";
-import { Text, TextInput, SafeAreaView, View, FlatList } from "react-native";
+import {
+  Text,
+  Button,
+  TextInput,
+  SafeAreaView,
+  View,
+  FlatList
+} from "react-native";
 import { SearchListings } from "@airbnb-clone/controller";
 
 interface State {
@@ -45,16 +52,19 @@ export class FindListingsConnector extends React.PureComponent<{}, State> {
           />
           <Text>Beds: {beds}</Text>
         </View>
-        <SearchListings
-          variables={{ input: { name, guests, beds }, limit: 5, offset: 0 }}
-        >
-          {({ listings }) => (
+        <SearchListings variables={{ input: { name }, limit: 5, offset: 0 }}>
+          {({ listings, hasMoreListings, loadMore }) => (
             <FlatList
-              ListFooterComponent={() => (
-                <View>
-                  <Text>Footer</Text>
-                </View>
-              )}
+              ListFooterComponent={() =>
+                hasMoreListings ? (
+                  <Button title="load more" onPress={loadMore} />
+                ) : (
+                  <View />
+                )
+              }
+              style={{
+                marginBottom: 25
+              }}
               data={listings}
               keyExtractor={({ id }) => `${id}-flc`}
               renderItem={({ item: l }) => (

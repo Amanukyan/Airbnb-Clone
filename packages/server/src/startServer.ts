@@ -12,11 +12,12 @@ import { redis } from "./redis";
 import { createTypeormConn } from "./utils/createTypeormConn";
 import { confirmEmail } from "./routes/confirmEmail";
 import { genSchema } from "./utils/genSchema";
-import { redisSessionPrefix, listingCacheKey } from "./constants";
+// import { redisSessionPrefix, listingCacheKey } from "./constants";
+import { redisSessionPrefix } from "./constants";
 import { createTestConn } from "./testUtils/createTestConn";
 import { middleware } from "./middleware";
 import { userLoader } from "./loaders/UserLoader";
-import { Listing } from "./entity/Listing";
+// import { Listing } from "./entity/Listing";
 
 const SESSION_SECRET = "qfzf32ff2Ò";
 var RedisStore = require("connect-redis")(session);

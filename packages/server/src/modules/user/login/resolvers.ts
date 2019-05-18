@@ -21,9 +21,13 @@ export const resolvers: ResolverMap = {
     login: async (_, { email, password }, { session, redis, req }) => {
       const user = await User.findOne({ where: { email } });
 
+      console.log("ok 1");
+
       if (!user) {
         return { errors: errorResponse };
       }
+
+      console.log("ok 2");
 
       if (!user.confirmed) {
         return {
@@ -36,6 +40,8 @@ export const resolvers: ResolverMap = {
         };
       }
 
+      console.log("ok 3");
+
       if (user.forgotPasswordLocked) {
         return {
           errors: [
@@ -47,17 +53,23 @@ export const resolvers: ResolverMap = {
         };
       }
 
+      console.log("ok 4");
+
       const valid = await bcrypt.compare(password, user.password);
 
       if (!valid) {
         return { errors: errorResponse };
       }
 
+      console.log("ok 5");
+
       // login sucessful
       session.userId = user.id;
       if (req.sessionID) {
         await redis.lpush(`${userSessionIdPrefix}${user.id}`, req.sessionID);
       }
+
+      console.log("ok 6");
 
       return { sessionId: req.sessionID };
     }

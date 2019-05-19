@@ -17,6 +17,7 @@ import { EditListingConnector } from "../modules/listing/edit/EditListingConnect
 export const Routes = () => (
   <BrowserRouter>
     <Switch>
+      <Route path="/" component={FindListingsConnector} />
       <Route exact={true} path="/register" component={RegisterConnector} />
       <Route exact={true} path="/login" component={LoginConnector} />
       <Route path="/logout" component={Logout} />

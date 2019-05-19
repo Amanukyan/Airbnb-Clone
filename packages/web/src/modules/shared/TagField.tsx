@@ -4,7 +4,7 @@ import { Form, Select } from "antd";
 
 const FormItem = Form.Item;
 
-export const TagField: React.SFC<
+export const TagField: React.FunctionComponent<
   FieldProps<any> & {
     prefix: React.ReactNode;
     label?: string;

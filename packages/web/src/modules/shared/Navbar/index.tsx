@@ -1,7 +1,10 @@
 import * as React from "react";
 import styled from "styled-components";
 
-const NavBarWrapper = styled.ul`
+const NavBarWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   overflow: hidden;
   background-color: white;
   position: fixed;
@@ -14,9 +17,10 @@ const NavBarWrapper = styled.ul`
 `;
 
 const NavBarItem = styled.div`
-  display: inline-block;
-  padding: 8px 15px;
-  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
   font-weight: bold;
   color: #069;
 `;
@@ -29,16 +33,7 @@ class NavBar extends React.PureComponent<Props> {
       <div>
         <NavBarWrapper>
           <NavBarItem>
-            <a href="#">Home</a>
-          </NavBarItem>
-          <NavBarItem>
-            <a href="#">About</a>
-          </NavBarItem>
-          <NavBarItem>
-            <a href="#">FAQ</a>
-          </NavBarItem>
-          <NavBarItem>
-            <a href="#">Contact</a>
+            <span>Login</span>
           </NavBarItem>
         </NavBarWrapper>
       </div>

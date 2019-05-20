@@ -12,6 +12,14 @@ export const findListingsQuery = gql`
     findListings {
       id
       name
+      category
+      description
+      price
+      beds
+      guests
+      longitude
+      latitude
+      amenities
       pictureUrl
       owner {
         id

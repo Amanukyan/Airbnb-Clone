@@ -16,6 +16,14 @@ export interface FindListingsQuery_findListings {
   __typename: "Listing";
   id: string;
   name: string;
+  category: string;
+  description: string;
+  price: number;
+  beds: number;
+  guests: number;
+  longitude: number;
+  latitude: number;
+  amenities: string[];
   pictureUrl: string;
   owner: FindListingsQuery_findListings_owner;
 }

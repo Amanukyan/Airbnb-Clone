@@ -5,15 +5,29 @@ import { withFindListings, WithFindListings } from "@airbnb-clone/controller";
 import { Link } from "react-router-dom";
 
 import NavBar from "../../shared/Navbar";
+import { Map } from "../../shared/Map";
+// import { ListingForm } from "../shared/ListingForm";
 
 const { Meta } = Card;
 
+const Wrapper = styled.div`
+  display: flex;
+  margin-top: 60px;
+  background: #f5f9fc;
+`;
+
 const GridListingContainer = styled.div`
   display: flex;
+  width: 60%;
+  justify-content: center;
   flex-wrap: wrap;
-  background: #fafafa;
-  width: 100%;
-  margin-top: 60px;
+`;
+
+const MapContainer = styled.div`
+  position: fixed;
+  right: 0;
+  width: 40%;
+  height: calc(100% - 60px);
 `;
 
 const StyledCard = styled(Card)`
@@ -35,26 +49,68 @@ const StyledCard = styled(Card)`
 `;
 
 class C extends React.PureComponent<WithFindListings> {
+  state = {
+    hoverListingId: ""
+  };
+
+  getMarkerData = (listings: any[]) => {
+    let markerData: any = [];
+    markerData = listings.map(listing => {
+      const data = {
+        id: listing.id,
+        info: `$${listing.price}`,
+        location: { latitude: listing.latitude, longitude: listing.longitude }
+      };
+      return data;
+    });
+    return markerData;
+  };
+
+  handleMouseOver = (listing: any) => {
+    this.setState({
+      hoverListingId: listing.id
+    });
+  };
+  handleMouseExit = () => {
+    this.setState({
+      hoverListingId: null
+    });
+  };
+
   render() {
     const { listings, loading } = this.props;
+    const { hoverListingId } = this.state;
+
+    const markerData: any = this.getMarkerData(listings);
+    console.log(markerData);
     return (
       <>
         <NavBar />
-        <GridListingContainer>
-          {loading && <div>...loading</div>}
-          {listings.map(l => (
-            <StyledCard
-              key={`${l.id}-card`}
-              hoverable={true}
-              style={{ width: 240 }}
-              cover={l.pictureUrl && <img alt="example" src={l.pictureUrl} />}
-            >
-              <Link to={`/listing/${l.id}`}>
-                <Meta title={l.name} description={l.owner.email} />
-              </Link>
-            </StyledCard>
-          ))}
-        </GridListingContainer>
+        <Wrapper>
+          <GridListingContainer>
+            {loading && <div>...loading</div>}
+            {listings.map(l => (
+              <StyledCard
+                key={`${l.id}-card`}
+                hoverable={true}
+                onMouseOver={() => this.handleMouseOver(l)}
+                onMouseOut={this.handleMouseExit}
+                style={{ width: 240 }}
+                cover={l.pictureUrl && <img alt="example" src={l.pictureUrl} />}
+              >
+                <Link to={`/listing/${l.id}`}>
+                  <Meta title={l.name} description={l.owner.email} />
+                </Link>
+              </StyledCard>
+            ))}
+          </GridListingContainer>
+          <MapContainer>
+            <Map
+              hoverListingId={hoverListingId}
+              markerData={markerData as any}
+            />
+          </MapContainer>
+        </Wrapper>
       </>
     );
   }

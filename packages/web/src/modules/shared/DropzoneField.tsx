@@ -31,6 +31,7 @@ export const DropzoneField: React.FunctionComponent<FieldProps<any>> = ({
       {pUrl && (
         <img
           src={pUrl}
+          alt=""
           style={{
             maxHeight: 200
           }}

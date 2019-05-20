@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Form as AntForm, Icon, Button } from "antd";
-import { withFormik, FormikErrors, FormikProps, Field, Form } from "formik";
+import { withFormik, FormikProps, Field, Form } from "formik";
 import { validUserSchema } from "@airbnb-clone/common";
 import { InputField } from "../../shared/InputField";
 import { Link } from "react-router-dom";

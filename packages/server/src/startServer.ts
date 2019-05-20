@@ -12,12 +12,11 @@ import { redis } from "./redis";
 import { createTypeormConn } from "./utils/createTypeormConn";
 import { confirmEmail } from "./routes/confirmEmail";
 import { genSchema } from "./utils/genSchema";
-// import { redisSessionPrefix, listingCacheKey } from "./constants";
-import { redisSessionPrefix } from "./constants";
+import { redisSessionPrefix, listingCacheKey } from "./constants";
 import { createTestConn } from "./testUtils/createTestConn";
 import { middleware } from "./middleware";
 import { userLoader } from "./loaders/UserLoader";
-// import { Listing } from "./entity/Listing";
+import { Listing } from "./entity/Listing";
 
 const SESSION_SECRET = "qfzf32ff2Ò";
 var RedisStore = require("connect-redis")(session);
@@ -99,13 +98,15 @@ export const startServer = async () => {
     await conn.runMigrations();
   }
 
-  // // clear cache
-  // await redis.del(listingCacheKey);
-  // // fill cache
-  // const listings = await Listing.find();
-  // const listingStrings = listings.map(x => JSON.stringify(x));
-  // await redis.lpush(listingCacheKey, ...listingStrings);
-  // // console.log(await redis.lrange(listingCacheKey, 0, -1));
+  // clear cache
+  await redis.del(listingCacheKey);
+  // fill cache
+  const listings = await Listing.find();
+  const listingStrings = listings.map(x => JSON.stringify(x));
+  if (listingStrings.length) {
+    await redis.lpush(listingCacheKey, ...listingStrings);
+  }
+  // console.log(await redis.lrange(listingCacheKey, 0, -1));
 
   const port = process.env.PORT || 4000;
   const app = await server.start({

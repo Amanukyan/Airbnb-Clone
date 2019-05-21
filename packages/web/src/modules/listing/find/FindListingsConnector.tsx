@@ -6,19 +6,20 @@ import { Link } from "react-router-dom";
 
 import NavBar from "../../shared/Navbar";
 import { Map } from "../../shared/Map";
+import SearchBar from "../../shared/SearchBar";
 // import { ListingForm } from "../shared/ListingForm";
 
 const { Meta } = Card;
 
 const Wrapper = styled.div`
   display: flex;
-  margin-top: 60px;
+  margin-top: 120px;
   background: #f5f9fc;
 `;
 
 const GridListingContainer = styled.div`
   display: flex;
-  width: 60%;
+  width: 65%;
   justify-content: center;
   flex-wrap: wrap;
 `;
@@ -26,15 +27,16 @@ const GridListingContainer = styled.div`
 const MapContainer = styled.div`
   position: fixed;
   right: 0;
-  width: 40%;
-  height: calc(100% - 60px);
+  width: 35%;
+  height: calc(100% - 120px);
 `;
 
 const StyledCard = styled(Card)`
   width: 370px !important;
   margin: 20px !important;
 
-  box-shadow: rgb(215, 215, 215) 0px 2px 4px !important;
+  box-shadow: rgb(215, 215, 215) 0px 0px 1px !important;
+  border: none !important;
   border-radius: 4px !important;
   overflow: hidden !important;
   transition: box-shadow 0.2s ease 0s !important;
@@ -82,10 +84,10 @@ class C extends React.PureComponent<WithFindListings> {
     const { hoverListingId } = this.state;
 
     const markerData: any = this.getMarkerData(listings);
-    console.log(markerData);
     return (
       <>
         <NavBar />
+        <SearchBar />
         <Wrapper>
           <GridListingContainer>
             {loading && <div>...loading</div>}

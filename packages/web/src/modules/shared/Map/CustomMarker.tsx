@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Marker, InfoWindow } from "react-google-maps";
-import { NetworkStatus } from "apollo-client";
 
 interface Props {
   showInfoWindow: Boolean;

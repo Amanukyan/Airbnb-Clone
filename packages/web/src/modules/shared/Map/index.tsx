@@ -1,9 +1,9 @@
 /*global google*/
-import * as React from "react";
-import styled from "styled-components";
-import { withGoogleMap, GoogleMap } from "react-google-maps";
+import * as React from 'react';
+import styled from 'styled-components';
+import { withGoogleMap, GoogleMap } from 'react-google-maps';
 
-import CustomMarker from "./CustomMarker";
+import CustomMarker from './CustomMarker';
 
 const ConainerElement = styled.div`
   height: 100%;
@@ -32,12 +32,12 @@ const MapWithAMarker = withGoogleMap<{
   markerData: MarkerData[];
   hoverListingId: String;
   onClick: (e: google.maps.KmlMouseEvent | google.maps.MouseEvent) => void;
-}>(props => (
+}>((props) => (
   <GoogleMap
     defaultZoom={13}
     defaultCenter={{
       lat: props.defaultCenter.latitude,
-      lng: props.defaultCenter.longitude
+      lng: props.defaultCenter.longitude,
     }}
     defaultOptions={{
       streetViewControl: false,
@@ -46,12 +46,13 @@ const MapWithAMarker = withGoogleMap<{
       panControl: false,
       zoomControl: true,
       rotateControl: false,
-      fullscreenControl: false
+      fullscreenControl: false,
     }}
     onClick={props.onClick}
   >
-    {props.markerData.map(data => (
+    {props.markerData.map((data) => (
       <CustomMarker
+        key={data.id as string}
         showInfoWindow={props.hoverListingId === data.id}
         info={data.info}
         lat={data.location.latitude}
@@ -79,7 +80,7 @@ export class Map extends React.PureComponent<Props> {
             defaultCenter={markerData[0].location}
             markerData={markerData}
             hoverListingId={hoverListingId}
-            onClick={() => "ok"}
+            onClick={() => 'ok'}
           />
         )}
       </>

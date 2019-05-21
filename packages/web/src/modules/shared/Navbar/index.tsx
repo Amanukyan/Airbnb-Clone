@@ -1,5 +1,6 @@
-import * as React from "react";
-import styled from "styled-components";
+import * as React from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const NavBarWrapper = styled.div`
   display: inline-block;
@@ -56,17 +57,23 @@ class NavBar extends React.PureComponent<Props> {
     return (
       <div>
         <NavBarWrapper>
-          <LogoWrapper>
-            <img src={process.env.PUBLIC_URL + "/logo.png"} alt="" />
-            Wellin
-          </LogoWrapper>
+          <Link to={`/`}>
+            <LogoWrapper>
+              <img src={process.env.PUBLIC_URL + '/logo.png'} alt="" />
+              Wellin
+            </LogoWrapper>
+          </Link>
           <RightNavBarWrapper>
-            <NavBarItem>
-              <span>Sign Up</span>
-            </NavBarItem>
-            <NavBarItem>
-              <span>Login</span>
-            </NavBarItem>
+            <Link to={`/register`}>
+              <NavBarItem>
+                <span>Sign Up</span>
+              </NavBarItem>
+            </Link>
+            <Link to={`/login`}>
+              <NavBarItem>
+                <span>Login</span>
+              </NavBarItem>
+            </Link>
           </RightNavBarWrapper>
         </NavBarWrapper>
       </div>

@@ -16,6 +16,8 @@ const Wrapper = styled.div`
 `;
 
 const ListingWrapper = styled.div`
+  width: 80%;
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -24,14 +26,13 @@ const ListingWrapper = styled.div`
 const ListingHeader = styled.div`
   margin: 20px 0;
 
-  font-size: 20px;
+  font-size: 32px;
   font-weight: bold;
 `;
 
 const ImageWrapper = styled.div`
   img {
-    width: 370px;
-    height: 250px;
+    width: 100%;
   }
 `;
 
@@ -40,8 +41,14 @@ const ListingDetails = styled.div`
   width: 100%;
 `;
 
+const DetailsTitle = styled.div`
+  font-size: 32px;
+  font-weight: 500;
+  margin: 10px 0;
+`;
+
 const MapWrapper = styled.div`
-  height: 250px;
+  height: 450px;
 `;
 
 export class ViewListingConnector extends React.PureComponent<
@@ -75,9 +82,9 @@ export class ViewListingConnector extends React.PureComponent<
                     <img src={data.listing.pictureUrl} />
                   </ImageWrapper>
                   <ListingDetails>
-                    <div>DESCRIPTION</div>
+                    <DetailsTitle>Description</DetailsTitle>
                     <div>{data.listing.description}</div>
-                    <div>LOCATION</div>
+                    <DetailsTitle>Location</DetailsTitle>
                     <MapWrapper>
                       <SingleItemMap
                         location={{
@@ -87,12 +94,12 @@ export class ViewListingConnector extends React.PureComponent<
                       />
                     </MapWrapper>
                   </ListingDetails>
-                  <div>
+                  {/* <div>
                     <Link to={`/listing/${listingId}/chat`}>chat</Link>
                   </div>
                   <div>
                     <Link to={`/listing/${listingId}/edit`}>edit</Link>
-                  </div>
+                  </div> */}
                 </ListingWrapper>
               </Wrapper>
             );

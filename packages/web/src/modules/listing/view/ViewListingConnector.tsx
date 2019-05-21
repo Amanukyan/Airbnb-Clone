@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { ViewListing } from '@airbnb-clone/controller';
-import { RouteComponentProps, Link } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 
 import NavBar from '../../shared/Navbar';
 import { SingleItemMap } from '../../shared/SingleItemMap';
@@ -79,7 +79,7 @@ export class ViewListingConnector extends React.PureComponent<
                     <div>{data.listing.name}</div>
                   </ListingHeader>
                   <ImageWrapper>
-                    <img src={data.listing.pictureUrl} />
+                    <img src={data.listing.pictureUrl} alt="" />
                   </ImageWrapper>
                   <ListingDetails>
                     <DetailsTitle>Description</DetailsTitle>

@@ -47,7 +47,7 @@ const LogoWrapper = styled.div`
 
 const NavBarItem = styled.div`
   color: #2d4560;
-  margin: 0 5px;
+  margin: 0 15px;
 `;
 
 interface Props {}
@@ -64,6 +64,11 @@ class NavBar extends React.PureComponent<Props> {
             </LogoWrapper>
           </Link>
           <RightNavBarWrapper>
+            <Link to={`/create-listing`}>
+              <NavBarItem>
+                <span>Create Listing</span>
+              </NavBarItem>
+            </Link>
             <Link to={`/register`}>
               <NavBarItem>
                 <span>Sign Up</span>

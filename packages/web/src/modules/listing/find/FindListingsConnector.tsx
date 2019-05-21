@@ -1,12 +1,12 @@
-import * as React from "react";
-import styled from "styled-components";
-import { Card } from "antd";
-import { withFindListings, WithFindListings } from "@airbnb-clone/controller";
-import { Link } from "react-router-dom";
+import * as React from 'react';
+import styled from 'styled-components';
+import { Card } from 'antd';
+import { withFindListings, WithFindListings } from '@airbnb-clone/controller';
+import { Link } from 'react-router-dom';
 
-import NavBar from "../../shared/Navbar";
-import { Map } from "../../shared/Map";
-import SearchBar from "../../shared/SearchBar";
+import NavBar from '../../shared/Navbar';
+import { Map } from '../../shared/Map';
+import SearchBar from '../../shared/SearchBar';
 // import { ListingForm } from "../shared/ListingForm";
 
 const { Meta } = Card;
@@ -32,36 +32,55 @@ const MapContainer = styled.div`
 `;
 
 const StyledCard = styled(Card)`
-  width: 370px !important;
-  margin: 20px !important;
+  padding: 20px !important;
 
   box-shadow: rgb(215, 215, 215) 0px 0px 1px !important;
   border: none !important;
-  border-radius: 4px !important;
+  /* border-radius: 4px !important; */
   overflow: hidden !important;
   transition: box-shadow 0.2s ease 0s !important;
 
+  .ant-card-cover {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+  }
+
   img {
-    height: 250px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+}
   }
 
   :hover {
-    box-shadow: rgb(215, 215, 215) 0px 8px 16px !important;
+    img {
+      box-shadow: 0px 0px 5px -2px rgba(0, 0, 0, 0.67) !important;
+    }
+  }
+
+  width: 50% !important;
+
+  @media (max-width: 1000px) {
+    width: 100% !important;
   }
 `;
 
 class C extends React.PureComponent<WithFindListings> {
   state = {
-    hoverListingId: ""
+    hoverListingId: '',
   };
 
   getMarkerData = (listings: any[]) => {
     let markerData: any = [];
-    markerData = listings.map(listing => {
+    markerData = listings.map((listing) => {
       const data = {
         id: listing.id,
         info: `$${listing.price}`,
-        location: { latitude: listing.latitude, longitude: listing.longitude }
+        location: { latitude: listing.latitude, longitude: listing.longitude },
       };
       return data;
     });
@@ -70,12 +89,12 @@ class C extends React.PureComponent<WithFindListings> {
 
   handleMouseOver = (listing: any) => {
     this.setState({
-      hoverListingId: listing.id
+      hoverListingId: listing.id,
     });
   };
   handleMouseExit = () => {
     this.setState({
-      hoverListingId: null
+      hoverListingId: null,
     });
   };
 
@@ -91,7 +110,7 @@ class C extends React.PureComponent<WithFindListings> {
         <Wrapper>
           <GridListingContainer>
             {loading && <div>...loading</div>}
-            {listings.map(l => (
+            {listings.map((l) => (
               <StyledCard
                 key={`${l.id}-card`}
                 hoverable={true}

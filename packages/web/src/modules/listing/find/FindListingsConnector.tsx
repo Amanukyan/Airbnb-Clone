@@ -17,9 +17,9 @@ const Wrapper = styled.div`
   background: #f5f9fc;
 `;
 
-const GridListingContainer = styled.div`
+const GridListingContainer = styled.div<{ showMap: boolean }>`
   display: flex;
-  width: 65%;
+  width: ${(props) => (props.showMap ? '65%' : '100%')};
   justify-content: center;
   flex-wrap: wrap;
 `;
@@ -72,6 +72,7 @@ const StyledCard = styled(Card)`
 class C extends React.PureComponent<WithFindListings> {
   state = {
     hoverListingId: '',
+    showMap: true,
   };
 
   getMarkerData = (listings: any[]) => {
@@ -87,6 +88,10 @@ class C extends React.PureComponent<WithFindListings> {
     return markerData;
   };
 
+  handleToggleShowMap = (checked: boolean) => {
+    this.setState({ showMap: checked });
+  };
+
   handleMouseOver = (listing: any) => {
     this.setState({
       hoverListingId: listing.id,
@@ -100,15 +105,15 @@ class C extends React.PureComponent<WithFindListings> {
 
   render() {
     const { listings, loading } = this.props;
-    const { hoverListingId } = this.state;
+    const { hoverListingId, showMap } = this.state;
 
     const markerData: any = this.getMarkerData(listings);
     return (
       <>
         <NavBar />
-        <SearchBar />
+        <SearchBar onShowMapSwitchChange={this.handleToggleShowMap} />
         <Wrapper>
-          <GridListingContainer>
+          <GridListingContainer showMap={showMap}>
             {loading && <div>...loading</div>}
             {listings.map((l) => (
               <StyledCard
@@ -125,12 +130,14 @@ class C extends React.PureComponent<WithFindListings> {
               </StyledCard>
             ))}
           </GridListingContainer>
-          <MapContainer>
-            <Map
-              hoverListingId={hoverListingId}
-              markerData={markerData as any}
-            />
-          </MapContainer>
+          {showMap && (
+            <MapContainer>
+              <Map
+                hoverListingId={hoverListingId}
+                markerData={markerData as any}
+              />
+            </MapContainer>
+          )}
         </Wrapper>
       </>
     );

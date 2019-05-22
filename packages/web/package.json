@@ -22,6 +22,7 @@
     "react-dropzone": "^10.1.4",
     "react-geosuggest": "^2.12.0",
     "react-google-maps": "^9.4.5",
+    "react-places-autocomplete": "^7.2.1",
     "react-router-dom": "^5.0.0",
     "react-scripts": "^3.0.0",
     "styled-components": "^4.2.0",

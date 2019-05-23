@@ -27,7 +27,7 @@ export const resolvers: ResolverMap = {
         });
       }
 
-      if (minPrice && maxPrice) {
+      if (minPrice !== null && maxPrice !== null) {
         listingQB = listingQB.andWhere(
           'l.price > :minPrice and l.price < :maxPrice',
           {

@@ -11,7 +11,7 @@ const NavBarWrapper = styled.div`
   width: 100%;
   height: 60px;
   border-bottom: 1px solid #0000000f;
-  z-index: 9999;
+  z-index: 10;
 `;
 
 const RightNavBarWrapper = styled.div`

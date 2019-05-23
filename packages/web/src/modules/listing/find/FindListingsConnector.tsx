@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import { Card } from 'antd';
 import { withFindListings, WithFindListings } from '@airbnb-clone/controller';
 import { Link } from 'react-router-dom';
+import { SearchListings } from '@airbnb-clone/controller';
 
 import NavBar from '../../shared/Navbar';
-import { Map } from '../../shared/Map';
+import { Map, Location } from '../../shared/Map';
 import SearchBar from '../../shared/SearchBar';
 // import { ListingForm } from "../shared/ListingForm";
 
@@ -14,13 +15,14 @@ const { Meta } = Card;
 const Wrapper = styled.div`
   display: flex;
   margin-top: 120px;
-  background: #f5f9fc;
+  /* background: #f5f9fc; */
+  background: white;
 `;
 
 const GridListingContainer = styled.div<{ showMap: boolean }>`
   display: flex;
   width: ${(props) => (props.showMap ? '65%' : '100%')};
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
 `;
 
@@ -69,10 +71,37 @@ const StyledCard = styled(Card)`
   }
 `;
 
-class C extends React.PureComponent<WithFindListings> {
+interface State {
+  hoverListingId?: string;
+  showMap: boolean;
+  searchedLocation?: Location;
+  minPrice: number;
+  maxPrice: number;
+}
+
+class C extends React.PureComponent<WithFindListings, State> {
   state = {
-    hoverListingId: '',
+    hoverListingId: undefined,
     showMap: true,
+    searchedLocation: {
+      longitude: 151.2034,
+      latitude: -33.8634,
+    },
+    minPrice: 0,
+    maxPrice: 1000,
+  };
+
+  updateDimensions = () => {
+    this.setState({ showMap: window.innerWidth > 800 });
+  };
+  componentWillMount = () => {
+    this.updateDimensions();
+  };
+  componentDidMount = () => {
+    window.addEventListener('resize', this.updateDimensions);
+  };
+  componentWillUnmount = () => {
+    window.removeEventListener('resize', this.updateDimensions);
   };
 
   getMarkerData = (listings: any[]) => {
@@ -88,6 +117,20 @@ class C extends React.PureComponent<WithFindListings> {
     return markerData;
   };
 
+  handleSearch = (location: any) => {
+    this.setState({ searchedLocation: location });
+    console.log('searchedLocation', location);
+  };
+
+  handlePriceSearch = (value: any) => {
+    const minPrice = value[0];
+    const maxPrice = value[1];
+    this.setState({
+      minPrice,
+      maxPrice,
+    });
+  };
+
   handleToggleShowMap = (checked: boolean) => {
     this.setState({ showMap: checked });
   };
@@ -99,46 +142,78 @@ class C extends React.PureComponent<WithFindListings> {
   };
   handleMouseExit = () => {
     this.setState({
-      hoverListingId: null,
+      hoverListingId: undefined,
     });
   };
 
   render() {
-    const { listings, loading } = this.props;
-    const { hoverListingId, showMap } = this.state;
+    // const { listings, loading } = this.props;
+    const {
+      hoverListingId,
+      showMap,
+      searchedLocation,
+      minPrice,
+      maxPrice,
+    } = this.state;
 
-    const markerData: any = this.getMarkerData(listings);
+    // const markerData: any = this.getMarkerData(listings);
     return (
       <>
         <NavBar />
-        <SearchBar onShowMapSwitchChange={this.handleToggleShowMap} />
-        <Wrapper>
-          <GridListingContainer showMap={showMap}>
-            {loading && <div>...loading</div>}
-            {listings.map((l) => (
-              <StyledCard
-                key={`${l.id}-card`}
-                hoverable={true}
-                onMouseOver={() => this.handleMouseOver(l)}
-                onMouseOut={this.handleMouseExit}
-                style={{ width: 240 }}
-                cover={l.pictureUrl && <img alt="example" src={l.pictureUrl} />}
-              >
-                <Link to={`/listing/${l.id}`}>
-                  <Meta title={l.name} description={l.owner.email} />
-                </Link>
-              </StyledCard>
-            ))}
-          </GridListingContainer>
-          {showMap && (
-            <MapContainer>
-              <Map
-                hoverListingId={hoverListingId}
-                markerData={markerData as any}
-              />
-            </MapContainer>
-          )}
-        </Wrapper>
+        <SearchBar
+          onShowMapSwitchChange={this.handleToggleShowMap}
+          onSearch={this.handleSearch}
+          onSearchPrice={this.handlePriceSearch}
+        />
+        <SearchListings
+          variables={{
+            input: {
+              longitude: searchedLocation.longitude,
+              latitude: searchedLocation.latitude,
+              minPrice,
+              maxPrice,
+            },
+            limit: 30,
+            offset: 0,
+          }}
+        >
+          {({ listings, hasMoreListings, loadMore }) => {
+            const markerData: any = this.getMarkerData(listings);
+
+            return (
+              <Wrapper>
+                <GridListingContainer showMap={showMap}>
+                  {/* {loading && <div>...loading</div>} */}
+                  {listings.map((l) => (
+                    <StyledCard
+                      key={`${l.id}-card`}
+                      hoverable={true}
+                      onMouseOver={() => this.handleMouseOver(l)}
+                      onMouseOut={this.handleMouseExit}
+                      style={{ width: 240 }}
+                      cover={
+                        l.pictureUrl && <img alt="example" src={l.pictureUrl} />
+                      }
+                    >
+                      <Link to={`/listing/${l.id}`}>
+                        <Meta title={l.name} description={l.owner.email} />
+                      </Link>
+                    </StyledCard>
+                  ))}
+                </GridListingContainer>
+                {showMap && (
+                  <MapContainer>
+                    <Map
+                      hoverListingId={hoverListingId}
+                      markerData={markerData as any}
+                      mapCenter={searchedLocation}
+                    />
+                  </MapContainer>
+                )}
+              </Wrapper>
+            );
+          }}
+        </SearchListings>
       </>
     );
   }

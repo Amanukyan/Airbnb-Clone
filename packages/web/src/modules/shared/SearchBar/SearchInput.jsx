@@ -61,6 +61,11 @@ class SearchInput extends React.Component {
           longitude: lng,
           isGeocoding: false,
         });
+        const location = {
+          latitude: lat,
+          longitude: lng,
+        };
+        this.props.onSearch(location);
       })
       .catch((error) => {
         this.setState({ isGeocoding: false });
@@ -108,19 +113,8 @@ class SearchInput extends React.Component {
     return classes.join(' ');
   };
 
-  handleInputChange = (event) => {
-    const { value } = event.target;
-    console.log('VALUE=', value);
-  };
-
   render() {
-    const {
-      address,
-      errorMessage,
-      latitude,
-      longitude,
-      isGeocoding,
-    } = this.state;
+    const { address } = this.state;
 
     const searchOptions = {
       types: ['(regions)'],
@@ -137,19 +131,10 @@ class SearchInput extends React.Component {
           shouldFetchSuggestions={address.length > 2}
         >
           {({ getInputProps, suggestions, getSuggestionItemProps }) => {
-            console.log('getInputProps', getInputProps());
-            console.log('getInputProps', getInputProps().value);
-            console.log('getInputProps', getInputProps().onChange);
-            console.log('suggestions', suggestions);
-
-            const formattedSuggestions = suggestions.map((suggestion) => {
-              return suggestion.formattedSuggestion.mainText;
-            });
-            console.log('suggestions', formattedSuggestions);
-
             const options = suggestions.map((suggestion) => (
-              <Option key={suggestion.id}>
-                {suggestion.formattedSuggestion.mainText}
+              <Option {...getSuggestionItemProps(suggestion)}>
+                <strong>{suggestion.formattedSuggestion.mainText}</strong>
+                <small>, {suggestion.formattedSuggestion.secondaryText}</small>
               </Option>
             ));
 
@@ -157,7 +142,11 @@ class SearchInput extends React.Component {
               <>
                 <StyledSelect
                   showSearch
-                  value={getInputProps().value}
+                  value={
+                    getInputProps().value === ''
+                      ? undefined
+                      : getInputProps().value
+                  }
                   placeholder={'Search...'}
                   // style={this.props.style}
                   defaultActiveFirstOption={false}
@@ -217,31 +206,6 @@ class SearchInput extends React.Component {
             );
           }}
         </StyledPlacesAutocomplete>
-        {errorMessage.length > 0 && (
-          <div className="Demo__error-message">{this.state.errorMessage}</div>
-        )}
-
-        {((latitude && longitude) || isGeocoding) && (
-          <div>
-            <h3 className="Demo__geocode-result-header">Geocode result</h3>
-            {isGeocoding ? (
-              <div>
-                <i className="fa fa-spinner fa-pulse fa-3x fa-fw Demo__spinner" />
-              </div>
-            ) : (
-              <div>
-                <div className="Demo__geocode-result-item--lat">
-                  <label>Latitude:</label>
-                  <span>{latitude}</span>
-                </div>
-                <div className="Demo__geocode-result-item--lng">
-                  <label>Longitude:</label>
-                  <span>{longitude}</span>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
       </>
     );
   }

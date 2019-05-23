@@ -15,6 +15,10 @@ export interface SearchListingsInput {
   guests?: number | null;
   beds?: number | null;
   name?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
+  minPrice?: number | null;
+  maxPrice?: number | null;
 }
 
 export interface UpdateListingInput {

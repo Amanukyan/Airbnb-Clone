@@ -15,7 +15,7 @@ const MapElement = styled.div`
   width: 100%;
 `;
 
-interface Location {
+export interface Location {
   latitude: number;
   longitude: number;
 }
@@ -29,12 +29,17 @@ interface MarkerData {
 // Syndey Opera House: lat: -33.8568, lng: 151.2153
 const MapWithAMarker = withGoogleMap<{
   defaultCenter: Location;
+  center: Location;
   markerData: MarkerData[];
-  hoverListingId: String;
+  hoverListingId?: String;
   onClick: (e: google.maps.KmlMouseEvent | google.maps.MouseEvent) => void;
 }>((props) => (
   <GoogleMap
-    defaultZoom={13}
+    defaultZoom={14}
+    center={{
+      lat: props.center.latitude,
+      lng: props.center.longitude,
+    }}
     defaultCenter={{
       lat: props.defaultCenter.latitude,
       lng: props.defaultCenter.longitude,
@@ -63,21 +68,23 @@ const MapWithAMarker = withGoogleMap<{
 ));
 
 interface Props {
-  hoverListingId: String;
+  hoverListingId?: String;
   markerData: MarkerData[];
+  mapCenter: Location | null;
 }
 
 export class Map extends React.PureComponent<Props> {
   render() {
-    const { markerData, hoverListingId } = this.props;
-
+    const { markerData, hoverListingId, mapCenter } = this.props;
+    console.log('defaultCenter', mapCenter);
     return (
       <>
-        {markerData.length && (
+        {(markerData.length > 0 || mapCenter) && (
           <MapWithAMarker
             containerElement={<ConainerElement />}
             mapElement={<MapElement />}
-            defaultCenter={markerData[0].location}
+            defaultCenter={mapCenter || markerData[0].location}
+            center={mapCenter || markerData[0].location}
             markerData={markerData}
             hoverListingId={hoverListingId}
             onClick={() => 'ok'}

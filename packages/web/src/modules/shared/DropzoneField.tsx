@@ -1,7 +1,7 @@
-import * as React from "react";
-import { FieldProps } from "formik";
-import Dropzone from "react-dropzone";
-import { Button } from "antd";
+import * as React from 'react';
+import { FieldProps } from 'formik';
+import Dropzone from 'react-dropzone';
+import { Button } from 'antd';
 
 export const DropzoneField: React.FunctionComponent<FieldProps<any>> = ({
   field: { name, value },
@@ -9,12 +9,15 @@ export const DropzoneField: React.FunctionComponent<FieldProps<any>> = ({
   ...props
 }) => {
   const pUrl = (value ? value.preview : null) || values.pictureUrl;
+  console.log('value', value);
   return (
     <div>
       <Dropzone
         accept="image/jpeg, image/png"
         multiple={false}
         onDrop={([file]) => {
+          console.log('file', file);
+          console.log('name', name);
           setFieldValue(name, file);
         }}
         {...props}
@@ -33,7 +36,7 @@ export const DropzoneField: React.FunctionComponent<FieldProps<any>> = ({
           src={pUrl}
           alt=""
           style={{
-            maxHeight: 200
+            maxHeight: 200,
           }}
         />
       )}
@@ -42,7 +45,7 @@ export const DropzoneField: React.FunctionComponent<FieldProps<any>> = ({
           setValues({
             ...values,
             pictureUrl: null,
-            picture: null
+            picture: null,
           })
         }
       >

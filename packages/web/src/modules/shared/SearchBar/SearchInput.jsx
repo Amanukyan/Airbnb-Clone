@@ -42,6 +42,8 @@ class SearchInput extends React.Component {
     };
   }
 
+  componentWillReceiveProps = () => {};
+
   handleChange = (address) => {
     this.setState({
       address,

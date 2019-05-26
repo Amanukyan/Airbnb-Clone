@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Form as AntForm, Button } from 'antd';
 import { Form, Formik, FormikActions } from 'formik';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import * as yup from 'yup';
 
 import { Page01 } from './ui/Page01';
 import { Page2 } from './ui/Page2';
@@ -22,6 +22,17 @@ const Header = styled.div`
   padding-left: 20px;
   font-size: 20px;
   font-weight: 600;
+  color: #909090;
+`;
+
+const Footer = styled.div`
+  position: fixed;
+  bottom: 0;
+  height: 60px;
+  border-top: #f1f1f1 solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #909090;
 `;
 
@@ -77,19 +88,95 @@ export const defaultListingFormValues = {
   category: '',
   description: '',
   price: 0,
-  beds: 0,
-  guests: 0,
+  beds: 1,
+  guests: 1,
   latitude: 0,
   longitude: 0,
   amenities: [],
 };
+
+// const fieldsByStep = [
+//   ['category'],
+//   ['guests', 'beds'],
+//   ['price'],
+//   ['latitude', 'longitude'],
+//   ['picture'],
+//   ['description', 'name'],
+// ];
+
+const validStep1Schema = yup.object().shape({
+  category: yup
+    .string()
+    .min(1)
+    .required('Please select an option'),
+});
+
+const validStep2Schema = yup.object().shape({
+  guests: yup
+    .number()
+    .min(1, ' ')
+    .required(' '),
+  beds: yup
+    .number()
+    .min(1)
+    .required(),
+});
+
+const validStep3Schema = yup.object().shape({
+  price: yup
+    .number()
+    .min(1, ' ')
+    .required(' '),
+});
+
+const validStep4Schema = yup.object().shape({
+  latitude: yup
+    .number()
+    .notOneOf([0], 'Please choose a location')
+    .required('Please choose a location'),
+  longitude: yup
+    .number()
+    .notOneOf([0], 'Please choose a location')
+    .required('Please choose a location'),
+});
+
+const validStep5Schema = yup.object().shape({
+  picture: yup.mixed().required('At least one picture is required'),
+  // .test(
+  //   'fileSize',
+  //   'File Size is too large',
+  //   (value) => value.size <= FILE_SIZE,
+  // )
+});
+
+const validStep6Schema = yup.object().shape({
+  name: yup.string().required('Please write a name'),
+  description: yup.string().required('Please write a descritption'),
+});
+
+const validSchemaArray = [
+  validStep1Schema,
+  validStep2Schema,
+  validStep3Schema,
+  validStep4Schema,
+  validStep5Schema,
+  validStep6Schema,
+];
 
 export class ListingForm extends React.PureComponent<Props, State> {
   state = {
     page: 0,
   };
 
-  nextPage = () => this.setState((state) => ({ page: state.page + 1 }));
+  nextPage = async (validateForm: any, values: any) => {
+    const { page } = this.state;
+    const errors = await validateForm(values);
+
+    if (Object.keys(errors).length === 0) {
+      this.setState({ page: page + 1 });
+    }
+  };
+
   previousPage = () => this.setState((state) => ({ page: state.page - 1 }));
 
   render() {
@@ -103,45 +190,67 @@ export class ListingForm extends React.PureComponent<Props, State> {
         <Formik<ListingFormValues>
           initialValues={initialValues}
           onSubmit={submit}
+          validationSchema={validSchemaArray[this.state.page]}
         >
-          {({ isSubmitting, values }) => (
+          {({ isSubmitting, values, setErrors, validateForm }) => (
             <Form style={{ display: 'flex' }}>
               <div style={{ width: 550, margin: 'auto' }}>
                 {pages[this.state.page]}
-                <FormItem>
-                  <div
+                <Footer>
+                  <FormItem
                     style={{
                       display: 'flex',
-                      justifyContent: 'flex-end',
+                      justifyContent: 'center',
                       alignItems: 'center',
+                      height: '100%',
+                      marginBottom: 0,
                     }}
                   >
-                    {this.state.page !== 0 && (
-                      <div
-                        style={{
-                          marginRight: '5px',
-                        }}
-                      >
-                        <Button onClick={this.previousPage}>back</Button>
-                      </div>
-                    )}
-                    {this.state.page === pages.length - 1 ? (
-                      <div>
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        alignItems: 'center',
+                        width: 550,
+                      }}
+                    >
+                      {this.state.page !== 0 && (
+                        <div
+                          style={{
+                            marginRight: '5px',
+                          }}
+                        >
+                          <Button
+                            onClick={() => {
+                              setErrors({});
+                              this.previousPage();
+                            }}
+                          >
+                            back
+                          </Button>
+                        </div>
+                      )}
+                      {this.state.page === pages.length - 1 ? (
+                        <div>
+                          <Button
+                            type="primary"
+                            htmlType="submit"
+                            disabled={isSubmitting}
+                          >
+                            create listing
+                          </Button>
+                        </div>
+                      ) : (
                         <Button
                           type="primary"
-                          htmlType="submit"
-                          disabled={isSubmitting}
+                          onClick={() => this.nextPage(validateForm, values)}
                         >
-                          create listing
+                          Next
                         </Button>
-                      </div>
-                    ) : (
-                      <Button type="primary" onClick={this.nextPage}>
-                        Next
-                      </Button>
-                    )}
-                  </div>
-                </FormItem>
+                      )}
+                    </div>
+                  </FormItem>
+                </Footer>
               </div>
             </Form>
           )}

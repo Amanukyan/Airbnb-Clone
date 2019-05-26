@@ -76,7 +76,6 @@ interface Props {
 export class Map extends React.PureComponent<Props> {
   render() {
     const { markerData, hoverListingId, mapCenter } = this.props;
-    console.log('defaultCenter', mapCenter);
     return (
       <>
         {(markerData.length > 0 || mapCenter) && (

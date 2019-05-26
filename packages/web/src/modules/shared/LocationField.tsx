@@ -1,7 +1,10 @@
 import * as React from 'react';
 import { FieldProps } from 'formik';
+import { Form } from 'antd';
 
 import SearchInput from './SearchBar/SearchInput';
+
+const FormItem = Form.Item;
 
 interface DefaultCenter {
   lat: number;
@@ -33,13 +36,18 @@ export class LocationField extends React.PureComponent<
   };
 
   render() {
-    const {
-      form: { values, setValues }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-    } = this.props;
+    const { form } = this.props;
+    const { errors } = form;
+    const errorMsg = errors['latitude'];
 
     return (
       <>
-        <SearchInput onSearch={this.onSuggestSelect} />
+        <FormItem
+          help={errorMsg}
+          validateStatus={errorMsg ? 'error' : undefined}
+        >
+          <SearchInput onSearch={this.onSuggestSelect} />
+        </FormItem>
       </>
     );
   }

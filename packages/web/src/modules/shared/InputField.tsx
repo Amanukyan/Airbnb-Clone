@@ -1,6 +1,6 @@
-import * as React from "react";
-import { FieldProps } from "formik";
-import { Form, Input, InputNumber } from "antd";
+import * as React from 'react';
+import { FieldProps } from 'formik';
+import { Form, Input, InputNumber } from 'antd';
 
 const FormItem = Form.Item;
 
@@ -17,7 +17,7 @@ export const InputField: React.FunctionComponent<
   useNumberComponent = false,
   ...props
 }) => {
-  const errorMsg = touched[field.name] && errors[field.name];
+  const errorMsg = errors[field.name];
 
   const Comp = useNumberComponent ? InputNumber : Input;
 
@@ -25,7 +25,7 @@ export const InputField: React.FunctionComponent<
     <FormItem
       label={label}
       help={errorMsg}
-      validateStatus={errorMsg ? "error" : undefined}
+      validateStatus={errorMsg ? 'error' : undefined}
     >
       <Comp
         {...field}

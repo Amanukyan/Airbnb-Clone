@@ -16,8 +16,6 @@ export const DropzoneField: React.FunctionComponent<FieldProps<any>> = ({
         accept="image/jpeg, image/png"
         multiple={false}
         onDrop={([file]) => {
-          console.log('file', file);
-          console.log('name', name);
           setFieldValue(name, file);
         }}
         {...props}

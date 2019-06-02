@@ -1,6 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { WithCurrentUser } from '../withCurrentUser';
+import { Avatar } from 'antd';
 
 const NavBarWrapper = styled.div`
   display: inline-block;
@@ -16,7 +18,7 @@ const NavBarWrapper = styled.div`
 
 const RightNavBarWrapper = styled.div`
   position: absolute;
-  right: 20px;
+  right: 0px;
   margin-right: 20px;
   color: #069;
   height: 100%;
@@ -46,14 +48,34 @@ const LogoWrapper = styled.div`
 `;
 
 const NavBarItem = styled.div`
-  color: #2d4560;
-  margin: 0 15px;
+  margin: 0px 30px;
+  display: flex;
+  height: 100%;
+  align-items: center;
+
+  span {
+    color: black;
+  }
 `;
 
-interface Props {}
+const Profile = styled.div`
+  .ant-avatar {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+  }
+`;
 
-class NavBar extends React.PureComponent<Props> {
+// interface Props {
+//   user?: {
+//     name: string;
+//   };
+// }
+
+class NavBar extends React.PureComponent<WithCurrentUser> {
   render() {
+    const { me } = this.props;
+    const isLoggedIn = true;
     return (
       <div>
         <NavBarWrapper>
@@ -64,21 +86,30 @@ class NavBar extends React.PureComponent<Props> {
             </LogoWrapper>
           </Link>
           <RightNavBarWrapper>
-            <Link to={`/create-listing`}>
-              <NavBarItem>
+            <NavBarItem>
+              <Link to={`/create-listing`}>
                 <span>Create Listing</span>
-              </NavBarItem>
-            </Link>
-            <Link to={`/register`}>
-              <NavBarItem>
-                <span>Sign Up</span>
-              </NavBarItem>
-            </Link>
-            <Link to={`/login`}>
-              <NavBarItem>
-                <span>Login</span>
-              </NavBarItem>
-            </Link>
+              </Link>
+            </NavBarItem>
+            {!!me ? (
+              <Profile>
+                <Avatar icon="user" />
+              </Profile>
+            ) : (
+              // <ProfilePic>{me.email}</ProfilePic>
+              <>
+                <Link to={`/register`}>
+                  <NavBarItem>
+                    <span>Sign Up</span>
+                  </NavBarItem>
+                </Link>
+                <Link to={`/login`}>
+                  <NavBarItem>
+                    <span>Login</span>
+                  </NavBarItem>
+                </Link>
+              </>
+            )}
           </RightNavBarWrapper>
         </NavBarWrapper>
       </div>

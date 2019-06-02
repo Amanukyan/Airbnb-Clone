@@ -1,8 +1,8 @@
-import * as React from "react";
-import { graphql, ChildProps } from "react-apollo";
-import { RouteProps, Route, RouteComponentProps, Redirect } from "react-router";
-import gql from "graphql-tag";
-import { MeQuery } from "./__generated__/MeQuery";
+import * as React from 'react';
+import { graphql, ChildProps } from 'react-apollo';
+import { RouteProps, Route, RouteComponentProps, Redirect } from 'react-router';
+import gql from 'graphql-tag';
+import { MeQuery } from './__generated__/MeQuery';
 
 type Props = RouteProps;
 
@@ -20,8 +20,8 @@ class C extends React.PureComponent<ChildProps<Props, MeQuery>> {
       return (
         <Redirect
           to={{
-            pathname: "/login",
-            state: { next: routeProps.location.pathname }
+            pathname: '/login',
+            state: { next: routeProps.location.pathname },
           }}
         />
       );

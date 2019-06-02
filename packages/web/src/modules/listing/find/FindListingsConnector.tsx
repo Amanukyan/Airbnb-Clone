@@ -8,13 +8,14 @@ import { SearchListings } from '@airbnb-clone/controller';
 import NavBar from '../../shared/Navbar';
 import { Map, Location } from '../../shared/Map';
 import SearchBar from '../../shared/SearchBar';
+import { withCurrentUser, WithCurrentUser } from '../../shared/withCurrentUser';
 // import { ListingForm } from "../shared/ListingForm";
 
 const { Meta } = Card;
 
 const Wrapper = styled.div`
   display: flex;
-  margin-top: 120px;
+  margin-top: 110px;
   /* background: #f5f9fc; */
   background: white;
 `;
@@ -48,6 +49,11 @@ const StyledCard = styled(Card)`
     padding-top: 56.25%;
   }
 
+  .ant-card-body {
+    padding: 10px 8px;
+    zoom: 1;
+}
+
   img {
     position: absolute;
     top: 0;
@@ -71,6 +77,32 @@ const StyledCard = styled(Card)`
   }
 `;
 
+const Title = styled.div`
+  font-size: 18px;
+  font-weight: 800;
+  color: rgb(72, 72, 72);
+`;
+
+const Price = styled.div`
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: 300;
+
+  padding: 2px 15px;
+  width: fit-content;
+  background: #001e54;
+  border-radius: 4px;
+  color: white;
+`;
+
+const Beds = styled.div`
+  font-size: 14px;
+  font-weight: 400;
+  color: rgb(72, 72, 72);
+`;
+
+const Guests = styled.div``;
+
 interface State {
   hoverListingId?: string;
   showMap: boolean;
@@ -79,7 +111,7 @@ interface State {
   maxPrice: number;
 }
 
-class C extends React.PureComponent<WithFindListings, State> {
+class C extends React.PureComponent<WithCurrentUser, State> {
   state = {
     hoverListingId: undefined,
     showMap: true,
@@ -156,10 +188,11 @@ class C extends React.PureComponent<WithFindListings, State> {
       maxPrice,
     } = this.state;
 
+    console.log('this.props.me=', this.props.me);
     // const markerData: any = this.getMarkerData(listings);
     return (
       <>
-        <NavBar />
+        <NavBar me={this.props.me} loading={false} />
         <SearchBar
           onShowMapSwitchChange={this.handleToggleShowMap}
           onSearch={this.handleSearch}
@@ -196,7 +229,11 @@ class C extends React.PureComponent<WithFindListings, State> {
                       }
                     >
                       <Link to={`/listing/${l.id}`}>
-                        <Meta title={l.name} description={l.owner.email} />
+                        <Title>{l.name}</Title>
+                        <Beds>
+                          {l.beds} beds • {l.guests} guests
+                        </Beds>
+                        <Price>${l.price}</Price>
                       </Link>
                     </StyledCard>
                   ))}
@@ -219,4 +256,4 @@ class C extends React.PureComponent<WithFindListings, State> {
   }
 }
 
-export const FindListingsConnector = withFindListings(C);
+export const FindListingsConnector = withCurrentUser(C);

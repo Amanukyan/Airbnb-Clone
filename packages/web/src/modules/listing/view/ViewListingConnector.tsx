@@ -64,7 +64,7 @@ export class ViewListingConnector extends React.PureComponent<
     } = this.props;
     return (
       <>
-        <NavBar />
+        <NavBar me={null} loading={false}/>
         <ViewListing listingId={listingId}>
           {(data) => {
             console.log(data);

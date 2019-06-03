@@ -48,7 +48,7 @@ const LogoWrapper = styled.div`
 `;
 
 const NavBarItem = styled.div`
-  margin: 0px 30px;
+  margin: 0px 10px;
   display: flex;
   height: 100%;
   align-items: center;
@@ -59,6 +59,7 @@ const NavBarItem = styled.div`
 `;
 
 const Profile = styled.div`
+  margin-left: 10px;
   .ant-avatar {
     width: 40px;
     height: 40px;

@@ -19,4 +19,6 @@ export interface RegisterMutation {
 export interface RegisterMutationVariables {
   email: string;
   password: string;
+  firstName: string;
+  lastName: string;
 }

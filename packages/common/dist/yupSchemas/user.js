@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const yup = require("yup");
-exports.emailNotLongEnough = "email must be at least 3 characters";
-exports.passwordNotLongEnough = "password must be at least 3 characters";
-exports.invalidEmail = "email must be a valid email";
+exports.emailNotLongEnough = 'email must be at least 3 characters';
+exports.passwordNotLongEnough = 'password must be at least 3 characters';
+exports.invalidEmail = 'email must be a valid email';
 exports.registerPasswordValidation = yup
     .string()
     .min(3, exports.passwordNotLongEnough)
@@ -16,9 +16,17 @@ exports.validUserSchema = yup.object().shape({
         .max(255)
         .email(exports.invalidEmail)
         .required(),
-    password: exports.registerPasswordValidation
+    firstName: yup
+        .string()
+        .max(255)
+        .required(),
+    lastName: yup
+        .string()
+        .max(255)
+        .required(),
+    password: exports.registerPasswordValidation,
 });
-const invalidLogin = "invalid login";
+const invalidLogin = 'invalid login';
 exports.loginSchema = yup.object().shape({
     email: yup
         .string()
@@ -30,9 +38,9 @@ exports.loginSchema = yup.object().shape({
         .string()
         .min(3, invalidLogin)
         .max(255, invalidLogin)
-        .required()
+        .required(),
 });
 exports.changePasswordSchema = yup.object().shape({
-    newPassword: exports.registerPasswordValidation
+    newPassword: exports.registerPasswordValidation,
 });
 //# sourceMappingURL=user.js.map

@@ -1,17 +1,17 @@
-import * as React from "react";
-import { graphql, ChildMutateProps } from "react-apollo";
-import gql from "graphql-tag";
+import * as React from 'react';
+import { graphql, ChildMutateProps } from 'react-apollo';
+import gql from 'graphql-tag';
 import {
   RegisterMutation,
-  RegisterMutationVariables
-} from "./__generated__/RegisterMutation";
-import { normalizeErrors } from "../../utils/normalizeErrors";
-import { NormalizedErrorMap } from "../../types/NormalizedErrorMap";
+  RegisterMutationVariables,
+} from './__generated__/RegisterMutation';
+import { normalizeErrors } from '../../utils/normalizeErrors';
+import { NormalizedErrorMap } from '../../types/NormalizedErrorMap';
 
 interface Props {
   children: (data: {
     submit: (
-      values: RegisterMutationVariables
+      values: RegisterMutationVariables,
     ) => Promise<NormalizedErrorMap | null>;
   }) => JSX.Element | null;
 }
@@ -22,13 +22,13 @@ class C extends React.PureComponent<
   submit = async (values: RegisterMutationVariables) => {
     console.log(values);
     const res = await this.props.mutate({
-      variables: values
+      variables: values,
     });
 
     if (res && res.data) {
       const { register } = res.data;
 
-      console.log("response: ", register);
+      console.log('response: ', register);
 
       if (register) {
         return normalizeErrors(register);
@@ -43,8 +43,18 @@ class C extends React.PureComponent<
 }
 
 const registerMutation = gql`
-  mutation RegisterMutation($email: String!, $password: String!) {
-    register(email: $email, password: $password) {
+  mutation RegisterMutation(
+    $email: String!
+    $password: String!
+    $firstName: String!
+    $lastName: String!
+  ) {
+    register(
+      email: $email
+      password: $password
+      firstName: $firstName
+      lastName: $lastName
+    ) {
       path
       message
     }

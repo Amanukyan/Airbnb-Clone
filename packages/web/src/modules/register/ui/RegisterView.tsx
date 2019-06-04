@@ -1,15 +1,17 @@
-import * as React from "react";
-import { Form as AntForm, Icon, Button } from "antd";
-import { withFormik, FormikProps, Field, Form } from "formik";
-import { validUserSchema } from "@airbnb-clone/common";
-import { InputField } from "../../shared/InputField";
-import { Link } from "react-router-dom";
-import { NormalizedErrorMap } from "@airbnb-clone/controller";
+import * as React from 'react';
+import { Form as AntForm, Icon, Button } from 'antd';
+import { withFormik, FormikProps, Field, Form } from 'formik';
+import { validUserSchema } from '@airbnb-clone/common';
+import { InputField } from '../../shared/InputField';
+import { Link } from 'react-router-dom';
+import { NormalizedErrorMap } from '@airbnb-clone/controller';
 
 const FormItem = AntForm.Item;
 
 interface FormValues {
   email: string;
+  firstName: string;
+  lastName: string;
   password: string;
 }
 
@@ -21,21 +23,37 @@ interface Props {
 class C extends React.PureComponent<FormikProps<FormValues> & Props> {
   render() {
     return (
-      <Form style={{ display: "flex" }}>
-        <div style={{ width: 400, margin: "auto" }}>
+      <Form style={{ display: 'flex' }}>
+        <div style={{ width: 400, margin: 'auto' }}>
           <Field
             name="email"
             prefix={
-              <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} /> as any
+              <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} /> as any
             }
             placeholder="Email"
+            component={InputField}
+          />
+          <Field
+            name="firstName"
+            prefix={
+              <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} /> as any
+            }
+            placeholder="First Name"
+            component={InputField}
+          />
+          <Field
+            name="lastName"
+            prefix={
+              <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} /> as any
+            }
+            placeholder="Last Name"
             component={InputField}
           />
           <Field
             name="password"
             type="password"
             prefix={
-              <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} /> as any
+              <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} /> as any
             }
             placeholder="Password"
             component={InputField}
@@ -52,9 +70,9 @@ class C extends React.PureComponent<FormikProps<FormValues> & Props> {
               Register
             </Button>
           </FormItem>
-          <FormItem>
+          {/* <FormItem>
             Or <Link to="/login">login now!</Link>
-          </FormItem>
+          </FormItem> */}
         </div>
       </Form>
     );
@@ -63,7 +81,12 @@ class C extends React.PureComponent<FormikProps<FormValues> & Props> {
 
 export const RegisterView = withFormik<Props, FormValues>({
   validationSchema: validUserSchema,
-  mapPropsToValues: () => ({ email: "", password: "" }),
+  mapPropsToValues: () => ({
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+  }),
   handleSubmit: async (values, { props, setErrors }) => {
     const errors = await props.submit(values);
     if (errors) {
@@ -71,5 +94,5 @@ export const RegisterView = withFormik<Props, FormValues>({
     } else {
       props.onFinish();
     }
-  }
+  },
 })(C);

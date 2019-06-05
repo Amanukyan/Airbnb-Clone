@@ -34,14 +34,24 @@ const MapContainer = styled.div`
   height: calc(100% - 120px);
 `;
 
-const StyledCard = styled(Card)`
+const CardWrapper = styled.div`
   padding: 20px !important;
 
-  box-shadow: rgb(215, 215, 215) 0px 0px 1px !important;
-  border: none !important;
+  /* box-shadow: rgb(215, 215, 215) 0px 0px 1px !important; */
   /* border-radius: 4px !important; */
   overflow: hidden !important;
   transition: box-shadow 0.2s ease 0s !important;
+
+  width: 50% !important;
+
+  @media (max-width: 1000px) {
+    width: 100% !important;
+  }
+`;
+
+const StyledCard = styled(Card)`
+  width: unset;
+  border: none !important;
 
   .ant-card-cover {
     position: relative;
@@ -52,7 +62,7 @@ const StyledCard = styled(Card)`
   .ant-card-body {
     padding: 10px 8px;
     zoom: 1;
-}
+  }
 
   img {
     position: absolute;
@@ -61,19 +71,12 @@ const StyledCard = styled(Card)`
     bottom: 0;
     right: 0;
     height: 100%;
-}
   }
 
   :hover {
     img {
       box-shadow: 0px 0px 5px -2px rgba(0, 0, 0, 0.67) !important;
     }
-  }
-
-  width: 50% !important;
-
-  @media (max-width: 1000px) {
-    width: 100% !important;
   }
 `;
 
@@ -218,24 +221,28 @@ class C extends React.PureComponent<WithCurrentUser, State> {
                 <GridListingContainer showMap={showMap}>
                   {/* {loading && <div>...loading</div>} */}
                   {listings.map((l) => (
-                    <StyledCard
-                      key={`${l.id}-card`}
-                      hoverable={true}
-                      onMouseOver={() => this.handleMouseOver(l)}
-                      onMouseOut={this.handleMouseExit}
-                      style={{ width: 240 }}
-                      cover={
-                        l.pictureUrl && <img alt="example" src={l.pictureUrl} />
-                      }
-                    >
+                    <CardWrapper>
                       <Link to={`/listing/${l.id}`}>
-                        <Title>{l.name}</Title>
-                        <Beds>
-                          {l.beds} beds • {l.guests} guests
-                        </Beds>
-                        <Price>${l.price}</Price>
+                        <StyledCard
+                          key={`${l.id}-card`}
+                          hoverable={true}
+                          onMouseOver={() => this.handleMouseOver(l)}
+                          onMouseOut={this.handleMouseExit}
+                          style={{}}
+                          cover={
+                            l.pictureUrl && (
+                              <img alt="example" src={l.pictureUrl} />
+                            )
+                          }
+                        >
+                          <Title>{l.name}</Title>
+                          <Beds>
+                            {l.beds} beds • {l.guests} guests
+                          </Beds>
+                          <Price>${l.price}</Price>
+                        </StyledCard>
                       </Link>
-                    </StyledCard>
+                    </CardWrapper>
                   ))}
                 </GridListingContainer>
                 {showMap && (

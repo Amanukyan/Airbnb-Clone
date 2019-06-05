@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { ViewListing } from '@airbnb-clone/controller';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, Link } from 'react-router-dom';
 
 import NavBar from '../../shared/Navbar';
 import { SingleItemMap } from '../../shared/SingleItemMap';
@@ -64,7 +64,7 @@ export class ViewListingConnector extends React.PureComponent<
     } = this.props;
     return (
       <>
-        <NavBar me={null} loading={false}/>
+        <NavBar me={null} loading={false} />
         <ViewListing listingId={listingId}>
           {(data) => {
             console.log(data);
@@ -100,6 +100,9 @@ export class ViewListingConnector extends React.PureComponent<
                   <div>
                     <Link to={`/listing/${listingId}/edit`}>edit</Link>
                   </div> */}
+                  <Link to={`/users/view/${data.listing.owner.id}`}>
+                    {data.listing.owner.email}
+                  </Link>
                 </ListingWrapper>
               </Wrapper>
             );

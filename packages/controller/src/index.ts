@@ -8,6 +8,7 @@ export * from './modules/CreateListing';
 export * from './modules/FindListings';
 export * from './modules/ViewListing';
 export * from './modules/ViewMessages';
+export * from './modules/ViewUser';
 export * from './modules/CreateMessage';
 export * from './modules/UpdateListing';
 export * from './modules/SearchListings';

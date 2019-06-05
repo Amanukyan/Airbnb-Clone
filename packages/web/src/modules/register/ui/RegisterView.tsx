@@ -58,9 +58,9 @@ class C extends React.PureComponent<FormikProps<FormValues> & Props> {
             placeholder="Password"
             component={InputField}
           />
-          <FormItem>
+          {/* <FormItem>
             <Link to="/forgot-password">Forgot password</Link>
-          </FormItem>
+          </FormItem> */}
           <FormItem>
             <Button
               type="primary"

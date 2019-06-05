@@ -75,7 +75,7 @@ const Profile = styled.div`
 const menu = (
   <Menu>
     <Menu.Item>
-      <Link to={`/profile`}>Profile</Link>
+      <Link to={`/users/edit`}>Profile</Link>
     </Menu.Item>
     <Menu.Item>
       <Link to={`/logout`}>Logout</Link>

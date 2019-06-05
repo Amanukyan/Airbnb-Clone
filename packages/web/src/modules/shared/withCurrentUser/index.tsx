@@ -13,6 +13,8 @@ const meQuery = gql`
   query MeQuery {
     me {
       email
+      firstName
+      lastName
     }
   }
 `;

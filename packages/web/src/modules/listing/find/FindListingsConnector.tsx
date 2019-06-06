@@ -1,15 +1,15 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Card } from 'antd';
-import { withFindListings, WithFindListings } from '@airbnb-clone/controller';
 import { Link } from 'react-router-dom';
 import { SearchListings } from '@airbnb-clone/controller';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBed, faUser } from '@fortawesome/free-solid-svg-icons';
 
 import NavBar from '../../shared/Navbar';
 import { Map, Location } from '../../shared/Map';
 import SearchBar from '../../shared/SearchBar';
 import { withCurrentUser, WithCurrentUser } from '../../shared/withCurrentUser';
-// import { ListingForm } from "../shared/ListingForm";
 
 const { Meta } = Card;
 
@@ -21,6 +21,7 @@ const Wrapper = styled.div`
 `;
 
 const GridListingContainer = styled.div<{ showMap: boolean }>`
+  padding: 10px;
   display: flex;
   width: ${(props) => (props.showMap ? '65%' : '100%')};
   justify-content: flex-start;
@@ -35,16 +36,20 @@ const MapContainer = styled.div`
 `;
 
 const CardWrapper = styled.div`
-  padding: 20px !important;
+  padding: 10px !important;
 
   /* box-shadow: rgb(215, 215, 215) 0px 0px 1px !important; */
   /* border-radius: 4px !important; */
   overflow: hidden !important;
   transition: box-shadow 0.2s ease 0s !important;
 
-  width: 50% !important;
+  width: calc(100% / 3) !important;
 
-  @media (max-width: 1000px) {
+  @media (max-width: 1300px) {
+    width: 50% !important;
+  }
+
+  @media (max-width: 600px) {
     width: 100% !important;
   }
 `;
@@ -53,18 +58,23 @@ const StyledCard = styled(Card)`
   width: unset;
   border: none !important;
 
+  box-shadow: rgb(215, 215, 215) 0px 2px 4px;
+  border-radius: 8px;
+
   .ant-card-cover {
     position: relative;
     width: 100%;
-    padding-top: 56.25%;
+    /* padding-top: 56.25%; */
+    padding-top: 70%;
   }
 
   .ant-card-body {
-    padding: 10px 8px;
+    padding: 20px;
     zoom: 1;
   }
 
   img {
+    object-fit: cover;
     position: absolute;
     top: 0;
     left: 0;
@@ -81,30 +91,47 @@ const StyledCard = styled(Card)`
 `;
 
 const Title = styled.div`
-  font-size: 18px;
-  font-weight: 800;
-  color: rgb(72, 72, 72);
+  font-size: 20px;
+  color: #242424;
+`;
+
+const SubTitle = styled.div`
+  font-size: 14px;
+  color: rgb(128, 128, 128);
+  text-transform: capitalize;
 `;
 
 const Price = styled.div`
-  margin-top: 10px;
-  font-size: 18px;
+  margin-top: 8px;
+  font-size: 23px;
   font-weight: 300;
 
-  padding: 2px 15px;
-  width: fit-content;
-  background: #001e54;
-  border-radius: 4px;
-  color: white;
+  color: #fbc31d;
 `;
 
-const Beds = styled.div`
-  font-size: 14px;
-  font-weight: 400;
-  color: rgb(72, 72, 72);
+const BottomSection = styled.div`
+  display: flex;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #d6d6d6;
 `;
 
-const Guests = styled.div``;
+const IconInfoWrapper = styled.div`
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+`;
+const IconAndData = styled.div`
+  span  {
+    padding-left: 5px;
+    font-weight: bold;
+  }
+`;
+
+const IconUnderText = styled.div`
+  color: rgb(150, 150, 150);
+  margin-top: 10px;
+`;
 
 interface State {
   hoverListingId?: string;
@@ -236,10 +263,30 @@ class C extends React.PureComponent<WithCurrentUser, State> {
                           }
                         >
                           <Title>{l.name}</Title>
-                          <Beds>
-                            {l.beds} beds • {l.guests} guests
-                          </Beds>
                           <Price>${l.price}</Price>
+                          <SubTitle>{l.category}</SubTitle>
+                          <BottomSection>
+                            <IconInfoWrapper>
+                              <IconAndData>
+                                <FontAwesomeIcon
+                                  color={'rgb(150,150,150)'}
+                                  icon={faBed}
+                                />{' '}
+                                <span>{l.beds}</span>
+                              </IconAndData>
+                              <IconUnderText>Beds</IconUnderText>
+                            </IconInfoWrapper>
+                            <IconInfoWrapper>
+                              <IconAndData>
+                                <FontAwesomeIcon
+                                  color={'rgb(150,150,150)'}
+                                  icon={faUser}
+                                />{' '}
+                                <span>{l.guests}</span>
+                              </IconAndData>
+                              <IconUnderText>Guests</IconUnderText>
+                            </IconInfoWrapper>
+                          </BottomSection>
                         </StyledCard>
                       </Link>
                     </CardWrapper>
